@@ -30,7 +30,7 @@ public class Controller : MonoBehaviour {
 	void Update () {
         if (Input.GetKey("r"))
         { //resets the game if the r key is hit
-            Application.LoadLevel(Application.loadedLevel);
+            Application.LoadLevel(0);
 
       }
         if (timer > 0)
@@ -40,6 +40,11 @@ public class Controller : MonoBehaviour {
         else { timer = 0; }
         
         timerObj.GetComponent<Text>().text = timer.ToString();
+
+        if(timer == 0)
+        {
+            Application.LoadLevel(2);
+        }
 
     }
 }

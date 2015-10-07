@@ -10,14 +10,15 @@ public class MenuUI : MonoBehaviour {
 
     public void ShowLevelSelect()
     {
-        //start off, players off, levels on
+    }
+
+    public void ShowPlayerSelect()
+    {
     }
 
     public void StartGame()
     {
         Application.LoadLevel(0);
-        Debug.Log("westarted");
-        //start on, players off, levels off
     }
 
     public void LoadLevel (int level)
@@ -27,7 +28,6 @@ public class MenuUI : MonoBehaviour {
 
     public void Play()
     {
-        //start off, players on, levels off
     }
 
 }

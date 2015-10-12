@@ -23,7 +23,7 @@ public class Driver : MonoBehaviour {
 		else if (playerNumber == 2)
 			c = new Color (0f, 0f, 1f, .2f);
 		else if (playerNumber == 3)
-			c = new Color (0f, 1f, 1f, .2f);
+			c = new Color (0f, 1f, 0f, .2f);
 		else if (playerNumber == 4)
 			c = new Color (1f, .5f, 0f, .2f);
 

@@ -31,16 +31,23 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        
+
+        //Should be removed before Feature Complete is done. For testing purposes still here.
         if (Input.GetKey("r"))
         { //resets the game if the r key is hit
             Application.LoadLevel(0);
 
       }
-        if (timer > 0)
+        if (GameStart.startGame == false)
         {
-            timer -= Time.deltaTime;
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else { timer = 0; }
         }
-        else { timer = 0; }
         
         timerObj.GetComponent<Text>().text = timer.ToString();
 

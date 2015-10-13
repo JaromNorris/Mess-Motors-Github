@@ -31,7 +31,10 @@ public class Driver : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		string horControl = "KeyboardHorizontal";
+        if (GameStart.startGame == true) { return; }
+        //if the game start countdown is still going, freezes the player's movement by returning before
+        //button presses are assessed
+        string horControl = "KeyboardHorizontal";
 		string accelControl = "KeyboardAccel";
 
 		if (playerNumber == 1) {

@@ -9,13 +9,17 @@ public class Controller : MonoBehaviour {
     private int boxSize = 60;
     public float timer;
     public GameObject timerObj;
+    public GameObject[] spawnPoints;//make an array of all viable spawn points. Can be readded for each level with minimal difference
+    public GameObject playerObject; //This is in order to spawn... not sure how this will work once we have different player sprites, but we'll figure it out
 
-	private PaintBox[,] paintArray;
+    private PaintBox[,] paintArray;
 
 
 	public Transform paintBox;
 
 	void Awake () {
+        SpawnPlayer();
+        SpawnPlayer();
         int rows = frameHeight / boxSize;
 		int cols = frameWidth / boxSize;
 		paintArray = new PaintBox[rows,cols]; //REMEMER THIS ARRAY IS IN FORM [Y,X]
@@ -28,11 +32,19 @@ public class Controller : MonoBehaviour {
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-        
+    void SpawnPlayer()
+    {
+        print("Spawn Called");
+        int spawn = Random.Range(0, spawnPoints.Length);
+        //picks a random spawn point to instantiate the player at. Currently no anti-collision detection
+        //anti-collision for start game could just return an int for which spot was chosen for P1 and forbid that from P2's random?
+        GameObject.Instantiate(playerObject, spawnPoints[spawn].transform.position, Quaternion.identity);
+    }
+
+    // Update is called once per frame
+    void Update () {
+
 
         //Should be removed before Feature Complete is done. For testing purposes still here.
         if (Input.GetKey("r"))

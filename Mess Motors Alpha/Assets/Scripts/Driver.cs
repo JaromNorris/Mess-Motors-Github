@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//This is the invisible boundary around the play area that prevents the car from leaving it.
-//[System.Serializable]
-//public class Boundary
-//{    public float xMin, xMax, yMin, yMax;}
+
 
 public class Driver : MonoBehaviour {
 	
 	public float maxSpeed = .3f;
 	public float currentSpeed = 0;
-    //public Boundary boundary;
 	public Color c;
 	public int playerNumber;
 
@@ -76,10 +72,6 @@ public class Driver : MonoBehaviour {
 		float xDir = (Mathf.Cos (transform.rotation.z * Mathf.Deg2Rad) * currentSpeed);
 		float yDir = (Mathf.Sin (Mathf.Deg2Rad * transform.rotation.z) * currentSpeed);
 
-        //adding in the clamp function, which prevents the player 
-        //from making their position something outside our bounds. 
-        //xDir = Mathf.Clamp(xDir, boundary.xMin, boundary.xMax);
-        //yDir = Mathf.Clamp(yDir, boundary.yMin, boundary.yMax);
         transform.Translate (new Vector3 (xDir, yDir, 0));
 
 	}

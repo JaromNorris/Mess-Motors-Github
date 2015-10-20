@@ -10,12 +10,17 @@ public class Controller : MonoBehaviour {
 	public int paintRadius = 3;
 
     public float timer;
+    private float spawnx = 0;
+    private float spawny = 0;//these floats designate the next spot to respawn. will be changed by spawnPlayers
+    private int spawn;
+    private Vector3 sp;
     public GameObject timerObj;
+    public static string winner;
 
     public GameObject[] spawnPoints;//make an array of all viable spawn points. Can be readded for each level with minimal difference
     
 	private GameObject[] players;
-	public GameObject playerObject; //This is in order to spawn... not sure how this will work once we have different player sprites, but we'll figure it out
+	public GameObject playerObject; 
 	public int numberOfPlayers = 1;
 
     private PaintBox[,] paintArray;
@@ -30,11 +35,13 @@ public class Controller : MonoBehaviour {
 	void createPlayers()
 	{
 		players = new GameObject[5];
-		Vector3 pos = new Vector3 (0f, 0f, 0f);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
+        //Vector3 pos = new Vector3 (0f, 0f, 0f);
+        Vector3 pos;
+        for (int i = 0; i < numberOfPlayers; i++) {
+            pos = RandomSpawn();
+            players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
 			players[i].GetComponent<Driver>().PlayerSetup(i);
-			SpawnPlayer(players[i]);
+			//SpawnPlayer(players[i]);
 		}
 	}
 
@@ -42,7 +49,7 @@ public class Controller : MonoBehaviour {
 	{
 		int rows = frameHeight / boxSize;
 		int cols = frameWidth / boxSize;
-		paintArray = new PaintBox[rows,cols]; //REMEMER THIS ARRAY IS IN FORM [Y,X]
+		paintArray = new PaintBox[rows,cols]; //REMEMBER THIS ARRAY IS IN FORM [Y,X]
 		for (int y = 0; y < rows; y++) {
 			for (int x = 0; x < cols; x++) {
 				Vector3 pos = new Vector3 (((x*boxSize)-(frameWidth/2f))/100f, 
@@ -54,12 +61,21 @@ public class Controller : MonoBehaviour {
 		}
 	}
 
-    void SpawnPlayer(GameObject car) //Needs to take a player number as a parameter, and all it does is set it's x and y positions.
+    //void SpawnPlayer(GameObject car) //Needs to take a player number as a parameter, and all it does is set its x and y positions.
+    //{
+      //  print("Spawn Called");
+        //spawn = Random.Range(0, spawnPoints.Length);
+       // spawnx = spawnPoints[spawn].GetComponent<Transform>().position.x;
+      //  spawny = spawnPoints[spawn].GetComponent<Transform>().position.y;
+   // }
+    Vector3 RandomSpawn()
+    //picks a random point from our 'safe' spawn list. Safe spawns are marked by small invisible boxes, turn on their sprite renderer to see location.
     {
-        print("Spawn Called");
-        int spawn = Random.Range(0, spawnPoints.Length);
-        //picks a random spawn point to instantiate the player at. Currently no anti-collision detection
-        //anti-collision for start game could just return an int for which spot was chosen for P1 and forbid that from P2's random?
+        spawn = Random.Range(0, spawnPoints.Length);
+        spawnx = spawnPoints[spawn].GetComponent<Transform>().position.x;
+        spawny = spawnPoints[spawn].GetComponent<Transform>().position.y;
+        sp = new Vector3(spawnx, spawny, 0f);
+        return sp;
     }
 
     // Update is called once per frame
@@ -150,17 +166,33 @@ public class Controller : MonoBehaviour {
 
 		int winScore = Mathf.Max (y, r, b, g, o);
 
-		if (y == winScore)
-			return "Yellow";
-		else if (r == winScore)
-			return "Red";
-		else if (b == winScore)
-			return "Blue";
-		else if (g == winScore)
-			return "Green";
-		else if (o == winScore)
-			return "Orange";
+        if (y == winScore)
+        {
+            winner = "y";
+            return "Yellow";
+        }
+        else if (r == winScore)
+        {
+            winner = "r";
+            return "Red";
+        }
+        else if (b == winScore)
+        {
+            winner = "b";
+            return "Blue";
+        }
+        else if (g == winScore)
+        {
+            winner = "g";
+            return "Green";
+        }
+        else if (o == winScore)
+        {
+            winner = "o";
+            return "Orange";
+        }
 
+        winner = "Error";
 		return "Error";
 	}
 }

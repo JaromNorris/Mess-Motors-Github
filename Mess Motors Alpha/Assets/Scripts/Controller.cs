@@ -11,11 +11,11 @@ public class Controller : MonoBehaviour {
     public GameObject timerObj;
     public GameObject[] spawnPoints;//make an array of all viable spawn points. Can be readded for each level with minimal difference
     public GameObject playerObject; //This is in order to spawn... not sure how this will work once we have different player sprites, but we'll figure it out
-
+	
     private PaintBox[,] paintArray;
 
 
-	public Transform paintBox;
+	public GameObject paintBox;
 
 	void Awake () {
         SpawnPlayer();
@@ -28,7 +28,8 @@ public class Controller : MonoBehaviour {
 				Vector3 pos = new Vector3 (x * (boxSize/100.0f) - frameWidth/200.0f, 
 				                           y * (boxSize/100.0f) - frameHeight/200.0f, 
 				                           0f);
-				paintArray[y, x] = Instantiate (paintBox, pos, Quaternion.identity) as PaintBox;
+				GameObject box = (Instantiate (paintBox, pos, Quaternion.identity)) as GameObject;
+				paintArray[y, x] = box.GetComponent<PaintBox>();
 			}
 		}
 	}
@@ -65,12 +66,14 @@ public class Controller : MonoBehaviour {
 
         if(timer == 0)
         {
-			//print ("Winner is: " + getWinner());
+			print ("Winner is: " + getWinner());
 			Application.LoadLevel(2);
         }
 
     }
 
+	//Counts up all of the paintboxes and returns the String Name
+	//of the color that has the most boxes.
 	public string getWinner()
 	{
 		//Variables to count squares.

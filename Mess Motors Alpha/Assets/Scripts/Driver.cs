@@ -14,19 +14,37 @@ public class Driver : MonoBehaviour {
 	public Color c;
 	public int playerNumber;
 
+	private string horControl = "KeyboardHorizontal";
+	private string accelControl = "KeyboardAccel";
+
 	// Use this for initialization
 	void Awake () {
-		if (playerNumber == 0)
-			c = new Color (1f, 1f, 0f, .2f);
-		else if (playerNumber == 1)
-			c = new Color (1f, 0f, 0f, .2f);
-		else if (playerNumber == 2)
-			c = new Color (0f, 0f, 1f, .2f);
-		else if (playerNumber == 3)
-			c = new Color (0f, 1f, 0f, .2f);
-		else if (playerNumber == 4)
-			c = new Color (1f, .5f, 0f, .2f);
 
+	}
+
+	public void PlayerSetup(int playNum)
+	{
+		playerNumber = playNum;
+
+		if (playerNumber == 0) {
+			c = new Color (1f, 1f, 0f, .2f);
+		} else if (playerNumber == 1) {
+			c = new Color (1f, 0f, 0f, .2f);
+			horControl = "P1Horizontal";
+			accelControl = "P1Accel";
+		} else if (playerNumber == 2) { 
+			c = new Color (0f, 0f, 1f, .2f);
+			horControl = "P2Horizontal";
+			accelControl = "P2Accel";
+		} else if (playerNumber == 3) {
+			c = new Color (0f, 1f, 0f, .2f);
+			horControl = "P3Horizontal";
+			accelControl = "P3Accel";
+		} else if (playerNumber == 4) {
+			c = new Color (1f, .5f, 0f, .2f);
+			horControl = "P4Horizontal";
+			accelControl = "P4Accel";
+		}
 	}
 	
 	// Update is called once per frame
@@ -34,22 +52,6 @@ public class Driver : MonoBehaviour {
         if (GameStart.startGame == true) { return; }
         //if the game start countdown is still going, freezes the player's movement by returning before
         //button presses are assessed
-        string horControl = "KeyboardHorizontal";
-		string accelControl = "KeyboardAccel";
-
-		if (playerNumber == 1) {
-			horControl = "P1Horizontal";
-			accelControl = "P1Accel";
-		} else if (playerNumber == 2) {
-			horControl = "P2Horizontal";
-			accelControl = "P2Accel";
-		} else if (playerNumber == 3) {
-			horControl = "P3Horizontal";
-			accelControl = "P3Accel";
-		} else if (playerNumber == 4) {
-			horControl = "P4Horizontal";
-			accelControl = "P4Accel";
-		}
 
 			float rotate = Input.GetAxisRaw (horControl);
 			transform.Rotate (0, 0, -rotate*2);
@@ -78,17 +80,7 @@ public class Driver : MonoBehaviour {
         //from making their position something outside our bounds. 
         //xDir = Mathf.Clamp(xDir, boundary.xMin, boundary.xMax);
         //yDir = Mathf.Clamp(yDir, boundary.yMin, boundary.yMax);
-        transform.Translate (new Vector3 (xDir,
-            yDir, 0));
+        transform.Translate (new Vector3 (xDir, yDir, 0));
 
-	}
-
-	void OnTriggerEnter2D(Collider2D coll)
-	{
-		if (coll.gameObject.tag == "PaintBox") {
-			print("Collision");
-			PaintBox box = coll.gameObject.GetComponent<PaintBox>();
-			box.ChangeColor (c);
-		}
 	}
 }

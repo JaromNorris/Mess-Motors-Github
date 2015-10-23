@@ -6,6 +6,8 @@ public class VictoryMenuUi : MonoBehaviour {
 
     public GameObject Restartbutton;
     public GameObject MMbutton;
+    private string win = Controller.winner;
+    public GameObject Display;
 
     public void ShowMainMenu()
     {
@@ -24,8 +26,8 @@ public class VictoryMenuUi : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
-	}
+        Display.GetComponent<Text>().text = win;
+    }
 	
 	// Update is called once per frame
 	void Update () {

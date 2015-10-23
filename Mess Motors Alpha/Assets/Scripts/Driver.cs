@@ -42,6 +42,11 @@ public class Driver : MonoBehaviour {
 			accelControl = "P4Accel";
 		}
 	}
+
+    void OnTriggerEnter()//the only trigger currently is a powerup box, so any time the trigger is entered I set powerup to true
+    {
+        Controller.powerup[playerNumber] = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {

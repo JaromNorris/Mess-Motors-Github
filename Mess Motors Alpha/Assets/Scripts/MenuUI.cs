@@ -7,9 +7,11 @@ public class MenuUI : MonoBehaviour {
     public GameObject Start;
     public GameObject Levels;
     public GameObject Players;
+    public static int levelselect;
 
     public void ShowLevelSelect()
     {
+        Application.LoadLevel(3);
     }
 
     public void ShowPlayerSelect()
@@ -18,7 +20,8 @@ public class MenuUI : MonoBehaviour {
 
     public void StartGame()
     {
-        Application.LoadLevel(0);
+
+        Application.LoadLevel(levelselect);
     }
 
     public void LoadLevel (int level)

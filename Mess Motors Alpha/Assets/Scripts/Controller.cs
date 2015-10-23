@@ -20,7 +20,9 @@ public class Controller : MonoBehaviour {
     public GameObject[] spawnPoints;//make an array of all viable spawn points. Can be readded for each level with minimal difference
     
 	private GameObject[] players;
-	public GameObject playerObject; 
+    public static bool[] powerup;
+    public GameObject[] powerupDisplays;
+    public GameObject playerObject; 
 	public int numberOfPlayers = 1;
 
     private PaintBox[,] paintArray;
@@ -35,9 +37,11 @@ public class Controller : MonoBehaviour {
 	void createPlayers()
 	{
 		players = new GameObject[5];
+        powerup = new bool[5];
         //Vector3 pos = new Vector3 (0f, 0f, 0f);
         Vector3 pos;
         for (int i = 0; i < numberOfPlayers; i++) {
+            powerup[i] = false;
             pos = RandomSpawn();
             players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
 			players[i].GetComponent<Driver>().PlayerSetup(i);
@@ -79,7 +83,8 @@ public class Controller : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
 
         //Should be removed before Feature Complete is done. For testing purposes still here.
@@ -87,7 +92,7 @@ public class Controller : MonoBehaviour {
         { //resets the game if the r key is hit
             Application.LoadLevel(0);
 
-      }
+        }
         if (GameStart.startGame == false)
         {
             if (timer > 0)
@@ -96,17 +101,32 @@ public class Controller : MonoBehaviour {
             }
             else { timer = 0; }
         }
-        
+
         timerObj.GetComponent<Text>().text = timer.ToString();
 
-        if(timer == 0)
+        if (timer == 0)
         {
-			print ("Winner is: " + getWinner());
-			Application.LoadLevel(2);
+            print("Winner is: " + getWinner());
+            Application.LoadLevel(2);
         }
 
-		paintGround ();
+        paintGround();
 
+        for (int i = 0; i < powerupDisplays.Length; i++)        
+            {
+            if (powerup[i] == false)
+            {
+                powerupDisplays[i].GetComponent<Text>().text = "None";
+            }
+            else if (powerup[i] == true)
+            {
+                powerupDisplays[i].GetComponent<Text>().text = "Yep";
+            }
+            else
+            {
+                powerupDisplays[i].GetComponent<Text>().text = "Not Active";
+            }
+        }
     }
 
 	void paintGround()
@@ -168,31 +188,31 @@ public class Controller : MonoBehaviour {
 
         if (y == winScore)
         {
-            winner = "y";
+            winner = "Yellow!";
             return "Yellow";
         }
         else if (r == winScore)
         {
-            winner = "r";
+            winner = "Red!";
             return "Red";
         }
         else if (b == winScore)
         {
-            winner = "b";
+            winner = "Blue!";
             return "Blue";
         }
         else if (g == winScore)
         {
-            winner = "g";
+            winner = "Green!";
             return "Green";
         }
         else if (o == winScore)
         {
-            winner = "o";
+            winner = "Orange!";
             return "Orange";
         }
 
-        winner = "Error";
+        winner = "You!";
 		return "Error";
 	}
 }

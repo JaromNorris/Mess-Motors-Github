@@ -142,7 +142,9 @@ public class Controller : MonoBehaviour {
 			for (int x = -paintRadius; x <= paintRadius; x++) {
 				for (int y = -paintRadius; y <= paintRadius; y++) {
 					if (Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow (y, 2)) <= paintRadius)
-						paintArray[yVal+y,xVal+x].ChangeColor(car.GetComponent<Driver>().c);
+						if (!(yVal+y < 0 || yVal+y >= frameHeight/boxSize || 
+						      xVal+x < 0 || xVal+x >= frameWidth/boxSize))
+							paintArray[yVal+y,xVal+x].ChangeColor(car.GetComponent<Driver>().c);
 				}
 			}
 		}

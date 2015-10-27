@@ -11,17 +11,18 @@ public class MenuUI : MonoBehaviour {
 
     public void ShowLevelSelect()
     {
-        Application.LoadLevel(3);
+        Application.LoadLevel(2);
     }
 
     public void ShowPlayerSelect()
     {
+		//Application.LoadLevel (1);
     }
 
     public void StartGame()
     {
-
-        Application.LoadLevel(levelselect);
+		Application.LoadLevel (4);
+        //Application.LoadLevel(levelselect);
     }
 
     public void LoadLevel (int level)

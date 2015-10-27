@@ -10,10 +10,6 @@ public class Controller : MonoBehaviour {
 	public int paintRadius = 3;
 
     public float timer;
-    private float spawnx = 0;
-    private float spawny = 0;//these floats designate the next spot to respawn. will be changed by spawnPlayers
-    private int spawn;
-    private Vector3 sp;
     public GameObject timerObj;
     public static string winner;
 
@@ -21,13 +17,20 @@ public class Controller : MonoBehaviour {
     
 	private GameObject[] players;
     public GameObject playerObject; 
-	public int numberOfPlayers = 1;
+	public int numberOfPlayers;
 
     private PaintBox[,] paintArray;
 	public GameObject paintBox;
 
+	public static GameObject instance;
+
 	void Awake () 
 	{
+		if (instance == null)
+			instance = gameObject;
+		else
+			Destroy (gameObject);
+
 		createPlayers ();
 		createPaintGrid ();
 	}
@@ -37,7 +40,7 @@ public class Controller : MonoBehaviour {
 		players = new GameObject[5];
         //Vector3 pos = new Vector3 (0f, 0f, 0f);
         Vector3 pos;
-        for (int i = 0; i < numberOfPlayers; i++) {
+        for (int i = 1; i <= numberOfPlayers; i++) {
             pos = RandomSpawn();
             players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
 			players[i].GetComponent<Driver>().PlayerSetup(i);
@@ -68,10 +71,15 @@ public class Controller : MonoBehaviour {
        // spawnx = spawnPoints[spawn].GetComponent<Transform>().position.x;
       //  spawny = spawnPoints[spawn].GetComponent<Transform>().position.y;
    // }
-    Vector3 RandomSpawn()
+    public Vector3 RandomSpawn()
     //picks a random point from our 'safe' spawn list. Safe spawns are marked by small invisible boxes, turn on their sprite renderer to see location.
     {
-        spawn = Random.Range(0, spawnPoints.Length);
+		float spawnx = 0;
+		float spawny = 0;//these floats designate the next spot to respawn. will be changed by spawnPlayers
+		int spawn;
+		Vector3 sp;
+
+		spawn = Random.Range(0, spawnPoints.Length);
         spawnx = spawnPoints[spawn].GetComponent<Transform>().position.x;
         spawny = spawnPoints[spawn].GetComponent<Transform>().position.y;
         sp = new Vector3(spawnx, spawny, 0f);
@@ -103,7 +111,7 @@ public class Controller : MonoBehaviour {
         if (timer == 0)
         {
             print("Winner is: " + getWinner());
-            Application.LoadLevel(2);
+            Application.LoadLevel(3);
         }
 
         paintGround();
@@ -115,7 +123,7 @@ public class Controller : MonoBehaviour {
 	{
 		foreach (GameObject car in players) {
 			if (car == null)
-				return;
+				continue;
 			float xPos = car.GetComponent<Transform>().position.x;
 			float yPos = car.GetComponent<Transform>().position.y;
 			int xVal = (int)((xPos + (frameWidth/200f))/(boxSize/100f));

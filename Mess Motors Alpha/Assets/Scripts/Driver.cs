@@ -9,9 +9,15 @@ public class Driver : MonoBehaviour {
 	public float currentSpeed = 0;
 	public Color c;
 	public int playerNumber;
+	public Sprite splat;
+	public Sprite car;
+
+	private GameObject controller = Controller.instance;
 
 	private string horControl = "KeyboardHorizontal";
 	private string accelControl = "KeyboardAccel";
+
+	private bool isDead = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -43,14 +49,17 @@ public class Driver : MonoBehaviour {
 		}
 	}
 
-    void OnTriggerEnter()//triggers should be dying and powerups
+    void OnTriggerEnter2D(Collider2D other)//triggers should be dying and powerups
     {
-        
+		print ("Trigger Enter");
+		if (other.tag == "Hazard") {
+			playerDeath ();
+		}
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameStart.startGame == true) { return; }
+        if (GameStart.startGame || isDead) { return; }
         //if the game start countdown is still going, freezes the player's movement by returning before
         //button presses are assessed
 
@@ -80,4 +89,23 @@ public class Driver : MonoBehaviour {
         transform.Translate (new Vector3 (xDir, yDir, 0));
 
 	}
+
+	void playerDeath()
+	{
+		gameObject.GetComponent<SpriteRenderer> ().sprite = splat;
+		isDead = true;
+		StartCoroutine ("wait");
+	}
+
+	public IEnumerator wait()
+	{
+		yield return new WaitForSeconds (3f);
+		gameObject.GetComponent<Transform> ().position = new Vector3 (-1000, -1000, 0);
+		yield return new WaitForSeconds (3f);
+		gameObject.GetComponent<Transform> ().position = 
+			controller.gameObject.GetComponent<Controller>().RandomSpawn ();
+		gameObject.GetComponent<SpriteRenderer> ().sprite = car;
+		isDead = false;
+	}
+
 }

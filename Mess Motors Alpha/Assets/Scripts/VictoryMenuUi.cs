@@ -11,12 +11,12 @@ public class VictoryMenuUi : MonoBehaviour {
 
     public void ShowMainMenu()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(0);
     }
 
     public void Restart()
     {
-        Application.LoadLevel(0);
+        Application.LoadLevel(4);
     }
 
     public void LoadLevel(int level)

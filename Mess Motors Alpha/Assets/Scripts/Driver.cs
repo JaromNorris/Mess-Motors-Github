@@ -43,9 +43,9 @@ public class Driver : MonoBehaviour {
 		}
 	}
 
-    void OnTriggerEnter()//the only trigger currently is a powerup box, so any time the trigger is entered I set powerup to true
+    void OnTriggerEnter()//triggers should be dying and powerups
     {
-        Controller.powerup[playerNumber] = true;
+        
     }
 	
 	// Update is called once per frame

@@ -20,8 +20,6 @@ public class Controller : MonoBehaviour {
     public GameObject[] spawnPoints;//make an array of all viable spawn points. Can be readded for each level with minimal difference
     
 	private GameObject[] players;
-    public static bool[] powerup;
-    public GameObject[] powerupDisplays;
     public GameObject playerObject; 
 	public int numberOfPlayers = 1;
 
@@ -37,11 +35,9 @@ public class Controller : MonoBehaviour {
 	void createPlayers()
 	{
 		players = new GameObject[5];
-        powerup = new bool[5];
         //Vector3 pos = new Vector3 (0f, 0f, 0f);
         Vector3 pos;
         for (int i = 0; i < numberOfPlayers; i++) {
-            powerup[i] = false;
             pos = RandomSpawn();
             players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
 			players[i].GetComponent<Driver>().PlayerSetup(i);
@@ -112,21 +108,7 @@ public class Controller : MonoBehaviour {
 
         paintGround();
 
-        for (int i = 0; i < powerupDisplays.Length; i++)        
-            {
-            if (powerup[i] == false)
-            {
-                powerupDisplays[i].GetComponent<Text>().text = "None";
-            }
-            else if (powerup[i] == true)
-            {
-                powerupDisplays[i].GetComponent<Text>().text = "Yep";
-            }
-            else
-            {
-                powerupDisplays[i].GetComponent<Text>().text = "Not Active";
-            }
-        }
+        
     }
 
 	void paintGround()

@@ -7,7 +7,7 @@ public class Controller : MonoBehaviour {
 	public int frameWidth = 1920;
 	public int frameHeight = 1080;
     private int boxSize = 24;
-	public int paintRadius = 3;
+	public int paintRadius;
 
     public float timer;
     public GameObject timerObj;
@@ -40,7 +40,7 @@ public class Controller : MonoBehaviour {
 		players = new GameObject[5];
         //Vector3 pos = new Vector3 (0f, 0f, 0f);
         Vector3 pos;
-        for (int i = 1; i <= numberOfPlayers; i++) {
+        for (int i = 0; i <= numberOfPlayers; i++) {
             pos = RandomSpawn();
             players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
 			players[i].GetComponent<Driver>().PlayerSetup(i);
@@ -106,7 +106,7 @@ public class Controller : MonoBehaviour {
             else { timer = 0; }
         }
 
-        timerObj.GetComponent<Text>().text = timer.ToString();
+        timerObj.GetComponent<Text>().text = ((int)timer).ToString();
 
         if (timer == 0)
         {

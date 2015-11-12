@@ -21,7 +21,7 @@ public class Driver : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-
+		gameObject.GetComponent<SpriteRenderer> ().sprite = car;
 	}
 
 	public void PlayerSetup(int playNum)
@@ -83,8 +83,8 @@ public class Driver : MonoBehaviour {
 					currentSpeed = 0;
 			}
         
-		float xDir = (Mathf.Cos (transform.rotation.z * Mathf.Deg2Rad) * currentSpeed);
-		float yDir = (Mathf.Sin (Mathf.Deg2Rad * transform.rotation.z) * currentSpeed);
+		float xDir = (Mathf.Cos ((transform.rotation.z-90) * Mathf.Deg2Rad) * currentSpeed);
+		float yDir = (Mathf.Sin (Mathf.Deg2Rad * (transform.rotation.z-90)) * currentSpeed);
 
         transform.Translate (new Vector3 (xDir, yDir, 0));
 

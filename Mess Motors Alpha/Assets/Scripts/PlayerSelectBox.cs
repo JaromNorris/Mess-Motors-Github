@@ -7,11 +7,12 @@ public class PlayerSelectBox : MonoBehaviour {
 	public GameObject carDisplay;
 	public Sprite[] cars;
 
-	public bool active = false;
-	public bool left;
+	private bool active = false;
+	private bool left;
 	private string button;
 	private string vertical;
 	private int carChoice = 0;
+	private bool canSwitch = true;
 
 	// Use this for initialization
 	void Start () {
@@ -66,18 +67,31 @@ public class PlayerSelectBox : MonoBehaviour {
 			}
 		}
 
+
 		if (Input.GetAxis (vertical) > 0) {
-			carChoice--;
-			if (carChoice == -1)
-				carChoice = 5;
-			carDisplay.GetComponent<SpriteRenderer> ().sprite = cars [carChoice];
+			if (canSwitch) {
+				carChoice--;
+				if (carChoice == -1)
+					carChoice = 5;
+				carDisplay.GetComponent<SpriteRenderer> ().sprite = cars [carChoice];
+				canSwitch = false;
+			}
+		} else if (Input.GetAxis (vertical) < 0) {
+			if (canSwitch) {
+				carChoice++;
+				if (carChoice == 6)
+					carChoice = 0;
+				carDisplay.GetComponent<SpriteRenderer> ().sprite = cars [carChoice];
+				canSwitch = false;
+			}
+		} else if (Input.GetAxis (vertical) == 0) {
+			canSwitch = true;
 		}
-		else if (Input.GetAxis(vertical) < 0) {
-			carChoice++;
-			if (carChoice == 6)
-				carChoice = 0;
-			carDisplay.GetComponent<SpriteRenderer> ().sprite = cars [carChoice];
-		}
+
+	}
+
+	public void setCarData()
+	{
 
 	}
 }

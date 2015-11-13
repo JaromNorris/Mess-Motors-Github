@@ -9,6 +9,15 @@ public class Controller : MonoBehaviour {
     private int boxSize = 24;
 	public int paintRadius;
 
+	/*
+	public static Tuple<bool, Sprite>[] carData 
+		= new Tuple<bool, Sprite>[new Tuple<bool,Sprite> (false, NULL),
+		                          new Tuple<bool,Sprite> (false, NULL),
+		                          new Tuple<bool,Sprite> (false, NULL),
+		                          new Tuple<bool,Sprite> (false, NULL),
+		                          new Tuple<bool,Sprite> (false, NULL)];
+		                          */
+
     public float timer;
     public GameObject timerObj;
     public static string winner;

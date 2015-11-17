@@ -4,19 +4,19 @@ using UnityEngine.UI;
 
 public class Controller : MonoBehaviour {
 
+	public struct car
+	{
+		public bool active;
+		public Sprite sprite;
+	}
+
 	public int frameWidth = 1920;
 	public int frameHeight = 1080;
     private int boxSize = 24;
 	public int paintRadius;
 
-	/*
-	public static Tuple<bool, Sprite>[] carData 
-		= new Tuple<bool, Sprite>[new Tuple<bool,Sprite> (false, NULL),
-		                          new Tuple<bool,Sprite> (false, NULL),
-		                          new Tuple<bool,Sprite> (false, NULL),
-		                          new Tuple<bool,Sprite> (false, NULL),
-		                          new Tuple<bool,Sprite> (false, NULL)];
-		                          */
+	public static car[] carData = new car[5]
+		{new car(), new car(), new car(), new car(), new car()};
 
     public float timer;
     public GameObject timerObj;

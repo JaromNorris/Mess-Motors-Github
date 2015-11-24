@@ -26,12 +26,17 @@ public class Controller : MonoBehaviour {
     
 	private GameObject[] players;
     public GameObject playerObject; 
-	public int numberOfPlayers;
 
     private PaintBox[,] paintArray;
 	public GameObject paintBox;
 
 	public static GameObject instance;
+
+	public GameObject DigitOne;
+	public GameObject DigitTen;
+	public GameObject DigitHundred;
+
+	public Sprite[] digits;
 
 	void Awake () 
 	{
@@ -49,11 +54,15 @@ public class Controller : MonoBehaviour {
 		players = new GameObject[5];
         //Vector3 pos = new Vector3 (0f, 0f, 0f);
         Vector3 pos;
-        for (int i = 0; i <= numberOfPlayers; i++) {
-            pos = RandomSpawn();
-            players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
-			players[i].GetComponent<Driver>().PlayerSetup(i);
-			//SpawnPlayer(players[i]);
+        for (int i = 0; i <= 4; i++) {
+            if (carData[i].active)
+			{
+				pos = RandomSpawn();
+	            players[i] = (Instantiate(playerObject, pos, Quaternion.identity)) as GameObject;
+				players[i].GetComponent<Driver>().PlayerSetup(i);
+				players[i].GetComponent<SpriteRenderer>().sprite = carData[i].sprite;
+				//SpawnPlayer(players[i]);
+			}
 		}
 	}
 
@@ -104,9 +113,9 @@ public class Controller : MonoBehaviour {
         if (Input.GetKey("r"))
         { //resets the game if the r key is hit
             Application.LoadLevel(0);
-
         }
-        if (GameStart.startGame == false)
+        
+		if (GameStart.startGame == false)
         {
             if (timer > 0)
             {
@@ -115,7 +124,14 @@ public class Controller : MonoBehaviour {
             else { timer = 0; }
         }
 
-        timerObj.GetComponent<Text>().text = ((int)timer).ToString();
+        //timerObj.GetComponent<Text>().text = ((int)timer).ToString();
+		DigitOne.GetComponent<SpriteRenderer> ().sprite = digits [(int)(timer % 10)];
+		DigitTen.GetComponent<SpriteRenderer> ().sprite = digits [(int)((timer / 10) % 10)];
+		if (timer > 100) {
+			DigitHundred.GetComponent<SpriteRenderer> ().enabled = true;
+			DigitHundred.GetComponent<SpriteRenderer> ().sprite = digits [(int)(Mathf.Floor (timer / 100))];
+		} else
+			DigitHundred.GetComponent<SpriteRenderer> ().enabled = false;
 
         if (timer == 0)
         {

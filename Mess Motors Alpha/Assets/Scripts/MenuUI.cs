@@ -21,7 +21,7 @@ public class MenuUI : MonoBehaviour {
 
     public void StartGame()
     {
-		Application.LoadLevel (4);
+		Application.LoadLevel (1);
         //Application.LoadLevel(levelselect);
     }
 
@@ -34,4 +34,9 @@ public class MenuUI : MonoBehaviour {
     {
     }
 
+	void Update()
+	{
+		if (Input.GetAxis ("Start") > 0)
+			StartGame ();
+	}
 }

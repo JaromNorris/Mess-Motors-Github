@@ -63,22 +63,28 @@ public class Driver : MonoBehaviour {
         //if the game start countdown is still going, freezes the player's movement by returning before
         //button presses are assessed
 
-			float rotate = Input.GetAxisRaw (horControl);
-			transform.Rotate (0, 0, -rotate*2);
+		float rotate = Input.GetAxisRaw (horControl);
+			
+		if (rotate < .2 && rotate > -.2)
+			rotate = 0;
+		else
+			rotate = rotate * 2;
+
+		transform.Rotate (0, 0, -rotate*2);
 
 			if (Input.GetAxis(accelControl) > 0) {
 				if (currentSpeed < maxSpeed)
-					currentSpeed += .02f;
+					currentSpeed += .015f;
 			} else if (Input.GetAxis (accelControl) < 0) {
 				if (currentSpeed > 0)
-					currentSpeed -= .04f;
+					currentSpeed -= .032f;
 				else if (currentSpeed > (0 - maxSpeed))
-					currentSpeed -= .01f;
+					currentSpeed -= .007f;
 			} else if (Input.GetAxis(accelControl) == 0) {
 				if (currentSpeed > 0)
-					currentSpeed -= .02f;
+					currentSpeed -= .015f;
 				else if (currentSpeed < 0)
-					currentSpeed += .01f;
+					currentSpeed += .015f;
 				else
 					currentSpeed = 0;
 			}
@@ -104,7 +110,7 @@ public class Driver : MonoBehaviour {
 		yield return new WaitForSeconds (3f);
 		gameObject.GetComponent<Transform> ().position = 
 			controller.gameObject.GetComponent<Controller>().RandomSpawn ();
-		gameObject.GetComponent<SpriteRenderer> ().sprite = car;
+		gameObject.GetComponent<SpriteRenderer> ().sprite = Controller.carData[playerNumber].sprite;
 		isDead = false;
 	}
 

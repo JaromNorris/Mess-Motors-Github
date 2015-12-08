@@ -100,6 +100,7 @@ public class Driver : MonoBehaviour {
 	{
 		gameObject.GetComponent<SpriteRenderer> ().sprite = splat;
 		isDead = true;
+		currentSpeed = 0;
 		StartCoroutine ("wait");
 	}
 
@@ -114,4 +115,11 @@ public class Driver : MonoBehaviour {
 		isDead = false;
 	}
 
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		//this.transform.GetComponent<Rigidbody2D>().velocity = Vector3.Reflect (other.relativeVelocity * -1, other.contacts [0].normal);
+		currentSpeed = -currentSpeed;
+		print("Collision Detected");
+
+	}
 }

@@ -9,7 +9,7 @@ public class Driver : MonoBehaviour {
 	public float currentSpeed = 0;
 	public Color c;
 	public int playerNumber;
-	public Sprite splat;
+	public Sprite[] splat;
 	public Sprite car;
 
 	private GameObject controller = Controller.instance;
@@ -98,7 +98,8 @@ public class Driver : MonoBehaviour {
 
 	void playerDeath()
 	{
-		gameObject.GetComponent<SpriteRenderer> ().sprite = splat;
+		gameObject.GetComponent<SpriteRenderer> ().sprite = splat
+							[Random.Range((playerNumber-1)*4, (playerNumber*4)-1)];
 		isDead = true;
 		currentSpeed = 0;
 		StartCoroutine ("wait");

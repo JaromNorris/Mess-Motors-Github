@@ -100,6 +100,7 @@ public class Driver : MonoBehaviour {
 	{
 		gameObject.GetComponent<SpriteRenderer> ().sprite = splat
 							[Random.Range((playerNumber-1)*4, (playerNumber*4)-1)];
+		//gameObject.GetComponent<Transform> ().localScale = new Vector3 (1f, 1f, 1f);
 		isDead = true;
 		currentSpeed = 0;
 		StartCoroutine ("wait");
@@ -113,13 +114,14 @@ public class Driver : MonoBehaviour {
 		gameObject.GetComponent<Transform> ().position = 
 			controller.gameObject.GetComponent<Controller>().RandomSpawn ();
 		gameObject.GetComponent<SpriteRenderer> ().sprite = Controller.carData[playerNumber].sprite;
+		//gameObject.GetComponent<Transform> ().localScale = new Vector3 (.2f, .2f, 1f);
 		isDead = false;
 	}
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		//this.transform.GetComponent<Rigidbody2D>().velocity = Vector3.Reflect (other.relativeVelocity * -1, other.contacts [0].normal);
-		currentSpeed = -currentSpeed;
+		//currentSpeed = -currentSpeed;
 		print("Collision Detected");
 
 	}
